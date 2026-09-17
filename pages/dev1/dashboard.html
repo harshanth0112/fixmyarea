@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FixMyArea — Dashboard</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: "#eefbf8",
+                            100: "#d8f5ef",
+                            200: "#b4ebe0",
+                            300: "#82dcd0",
+                            400: "#4fc4b6",
+                            500: "#22a99b",
+                            600: "#0f766e",
+                            700: "#115e59",
+                            800: "#134e4a"
+                        },
+
+                        accent: {
+                            50: "#eef2ff",
+                            100: "#e0e7ff",
+                            200: "#c7d2fe",
+                            500: "#6366f1",
+                            600: "#4f46e5",
+                            700: "#4338ca"
+                        },
+
+                        ink: "#172033",
+                        surface: "#f4f8f5"
+                    },
+
+                    boxShadow: {
+                        soft:
+                            "0 25px 70px rgba(15, 118, 110, 0.11)",
+
+                        card:
+                            "0 15px 45px rgba(23, 32, 51, 0.08)"
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+
+
+<body
+    class="bg-surface text-ink antialiased"
+>
+
+    <header
+        id="navbar"
+        class="fixed inset-x-0 top-0 z-50
+               border-b border-slate-200/70
+               bg-white/80 backdrop-blur-xl
+               shadow-sm transition-all duration-500"
+    >
+
+        <nav class="mx-auto max-w-7xl px-6 lg:px-8">
+
+            <div
+                class="flex h-20 items-center
+                       justify-between"
+            >
+
+                <!-- Logo -->
+
+                <a
+                    href="home.html"
+                    class="group flex items-center gap-3"
+                >
+
+                    <div
+                        class="flex h-10 w-10
+                               items-center justify-center
+                               rounded-2xl
+                               bg-brand-600
+                               shadow-lg
+                               shadow-brand-600/20
+                               transition duration-300
+                               group-hover:scale-105
+                               group-hover:rotate-3"
+                    >
+
+                        <span
+                            class="text-lg font-bold text-white"
+                        >
+                            F
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <div
+                            class="text-lg font-bold
+                                   tracking-tight"
+                        >
+                            FixMyArea
+                        </div>
+
+                        <div
+                            class="text-[11px] font-medium
+                                   text-slate-500"
+                        >
+                            Better places. Together.
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Desktop Navigation -->
+
+                <div
+                    class="hidden items-center gap-7 md:flex"
+                >
+
+                    <a
+                        href="home.html"
+                        class="text-sm font-medium
+                               text-slate-600
+                               transition-colors
+                               duration-300
+                               hover:text-brand-600"
+                    >
+                        Home
+                    </a>
+
+
+                    <a
+                        href="dashboard.html"
+                        class="relative text-sm
+                               font-semibold
+                               text-brand-600"
+                    >
+
+                        Dashboard
+
+                        <span
+                            class="absolute -bottom-2
+                                   left-0 h-0.5 w-full
+                                   rounded-full
+                                   bg-brand-600"
+                        ></span>
+
+                    </a>
+
+
+                    <a
+                        href="../dev2/report.html"
+                        class="text-sm font-medium
+                               text-slate-600
+                               transition-colors
+                               duration-300
+                               hover:text-brand-600"
+                    >
+                        Report Issue
+                    </a>
+
+
+                    <a
+                        href="../dev3/issues.html"
+                        class="text-sm font-medium
+                               text-slate-600
+                               transition-colors
+                               duration-300
+                               hover:text-brand-600"
+                    >
+                        Explore Issues
+                    </a>
+
+
+                    <a
+                        href="../dev3/my-reports.html"
+                        class="text-sm font-medium
+                               text-slate-600
+                               transition-colors
+                               duration-300
+                               hover:text-brand-600"
+                    >
+                        My Reports
+                    </a>
+
+
+                    <a
+                        href="../dev4/admin.html"
+                        class="text-sm font-medium
+                               text-slate-600
+                               transition-colors
+                               duration-300
+                               hover:text-brand-600"
+                    >
+                        Admin
+                    </a>
+
+                </div>
+
+
+                <!-- CTA -->
+
+                <a
+                    href="../dev2/report.html"
+                    class="hidden items-center gap-2
+                           rounded-full
+                           bg-brand-600
+                           px-5 py-2.5
+                           text-sm font-semibold
+                           text-white
+                           shadow-lg
+                           shadow-brand-600/20
+                           transition duration-300
+                           hover:-translate-y-0.5
+                           hover:bg-brand-700
+                           md:inline-flex"
+                >
+
+                    Report an Issue
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+
+                <!-- Mobile Button -->
+
+                <button
+                    id="mobileMenuButton"
+                    type="button"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    class="rounded-xl p-2.5
+                           text-slate-700
+                           transition duration-300
+                           hover:bg-slate-100
+                           md:hidden"
+                >
+
+                    <svg
+                        id="menuIcon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                    >
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M4 6h16M4 12h16M4 18h16"
+                        />
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+
+            <!-- Mobile Navigation -->
+
+            <div
+                id="mobileMenu"
+                class="hidden overflow-hidden
+                       border-t border-slate-200/70
+                       pb-5 pt-4 md:hidden"
+            >
+
+                <div class="flex flex-col gap-2">
+
+                    <a
+                        href="home.html"
+                        class="rounded-xl px-4 py-3
+                               text-sm font-medium
+                               text-slate-600
+                               transition hover:bg-slate-100"
+                    >
+                        Home
+                    </a>
+
+
+                    <a
+                        href="dashboard.html"
+                        class="rounded-xl
+                               bg-brand-50 px-4 py-3
+                               text-sm font-semibold
+                               text-brand-700"
+                    >
+                        Dashboard
+                    </a>
+
+
+                    <a
+                        href="../dev2/report.html"
+                        class="rounded-xl px-4 py-3
+                               text-sm font-medium
+                               text-slate-600
+                               transition hover:bg-slate-100"
+                    >
+                        Report Issue
+                    </a>
+
+
+                    <a
+                        href="../dev3/issues.html"
+                        class="rounded-xl px-4 py-3
+                               text-sm font-medium
+                               text-slate-600
+                               transition hover:bg-slate-100"
+                    >
+                        Explore Issues
+                    </a>
+
+
+                    <a
+                        href="../dev3/my-reports.html"
+                        class="rounded-xl px-4 py-3
+                               text-sm font-medium
+                               text-slate-600
+                               transition hover:bg-slate-100"
+                    >
+                        My Reports
+                    </a>
+
+
+                    <a
+                        href="../dev4/admin.html"
+                        class="rounded-xl px-4 py-3
+                               text-sm font-medium
+                               text-slate-600
+                               transition hover:bg-slate-100"
+                    >
+                        Admin
+                    </a>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <main
+        class="px-6 pb-20 pt-32 lg:px-8 lg:pt-36"
+    >
+
+        <div
+            class="mx-auto max-w-7xl"
+        >
+            <section
+                data-reveal
+                class="mb-10"
+            >
+
+                <div
+                    class="flex flex-col
+                           justify-between gap-6
+                           lg:flex-row
+                           lg:items-end"
+                >
+
+                    <div>
+
+                        <span
+                            class="inline-flex rounded-full
+                                   bg-brand-50 px-4 py-2
+                                   text-xs font-bold
+                                   uppercase
+                                   tracking-[0.18em]
+                                   text-brand-700"
+                        >
+                            Community dashboard
+                        </span>
+
+
+                        <h1
+                            class="mt-5 text-4xl
+                                   font-bold
+                                   tracking-tight
+                                   sm:text-5xl"
+                        >
+                            See what is happening
+                            <span
+                                class="text-brand-600"
+                            >
+                                around you.
+                            </span>
+                        </h1>
+
+
+                        <p
+                            class="mt-4 max-w-2xl
+                                   text-base leading-7
+                                   text-slate-500
+                                   sm:text-lg"
+                        >
+                            Track reported problems,
+                            active work, resolved issues,
+                            and the areas that need
+                            attention.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Quick Action -->
+
+                    <a
+                        href="../dev2/report.html"
+                        class="group inline-flex
+                               shrink-0
+                               items-center gap-3
+                               self-start rounded-full
+                               bg-brand-600
+                               px-6 py-3.5
+                               font-semibold text-white
+                               shadow-lg
+                               shadow-brand-600/20
+                               transition duration-300
+                               hover:-translate-y-1
+                               hover:bg-brand-700
+                               lg:self-auto"
+                    >
+
+                        <span>
+                            Report an Issue
+                        </span>
+
+                        <span
+                            class="transition-transform
+                                   duration-300
+                                   group-hover:translate-x-1"
+                        >
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </section>
+
+            <section
+                class="grid gap-5
+                       sm:grid-cols-2
+                       xl:grid-cols-3"
+            >
+
+
+                <!-- Total -->
+
+                <article
+                    data-reveal
+                    class="stat-card group rounded-[2rem]
+                           border border-slate-100
+                           bg-white p-6 shadow-card
+                           transition-all duration-500
+                           hover:-translate-y-1
+                           hover:shadow-soft"
+                >
+
+                    <div
+                        class="flex items-start
+                               justify-between"
+                    >
+
+                        <div
+                            class="flex h-12 w-12
+                                   items-center
+                                   justify-center
+                                   rounded-2xl
+                                   bg-brand-50
+                                   text-xl text-brand-700"
+                        >
+                            ◉
+                        </div>
+
+                        <span
+                            class="rounded-full
+                                   bg-brand-50 px-3 py-1
+                                   text-xs font-semibold
+                                   text-brand-700"
+                        >
+                            All
+                        </span>
+
+                    </div>
+
+
+                    <p
+                        class="mt-7 text-sm
+                               text-slate-500"
+                    >
+                        Total issues
+                    </p>
+
+
+                    <p
+                        id="dashboardTotal"
+                        class="mt-2 text-4xl
+                               font-bold
+                               tracking-tight"
+                    >
+                        0
+                    </p>
+
+
+                    <p
+                        class="mt-3 text-xs
+                               text-slate-400"
+                    >
+                        All reported community issues
+                    </p>
+
+                </article>
+
+
+                <!-- Reported -->
+
+                <article
+                    data-reveal
+                    class="stat-card group rounded-[2rem]
+                           border border-slate-100
+                           bg-white p-6 shadow-card
+                           transition-all duration-500
+                           hover:-translate-y-1
+                           hover:shadow-soft"
+                >
+
+                    <div
+                        class="flex items-start
+                               justify-between"
+                    >
+
+                        <div
+                            class="flex h-12 w-12
+                                   items-center
+                                   justify-center
+                                   rounded-2xl
+                                   bg-amber-50
+                                   text-xl text-amber-600"
+                        >
+                            !
+                        </div>
+
+                        <span
+                            class="rounded-full
+                                   bg-amber-50 px-3 py-1
+                                   text-xs font-semibold
+                                   text-amber-700"
+                        >
+                            New
+                        </span>
+
+                    </div>
+
+
+                    <p
+                        class="mt-7 text-sm
+                               text-slate-500"
+                    >
+                        Reported
+                    </p>
+
+
+                    <p
+                        id="dashboardReported"
+                        class="mt-2 text-4xl
+                               font-bold
+                               tracking-tight"
+                    >
+                        0
+                    </p>
+
+
+                    <p
+                        class="mt-3 text-xs
+                               text-slate-400"
+                    >
+                        Waiting for review
+                    </p>
+
+                </article>
+
+
+                <!-- Under Review -->
+
+                <article
+                    data-reveal
+                    class="stat-card group rounded-[2rem]
+                           border border-slate-100
+                           bg-white p-6 shadow-card
+                           transition-all duration-500
+                           hover:-translate-y-1
+                           hover:shadow-soft"
+                >
+
+                    <div
+                        class="flex items-start
+                               justify-between"
+                    >
+
+                        <div
+                            class="flex h-12 w-12
+                                   items-center
+                                   justify-center
+                                   rounded-2xl
+                                   bg-indigo-50
+                                   text-xl text-indigo-600"
+                        >
+                            ◌
+                        </div>
+
+                        <span
+                            class="rounded-full
+                                   bg-indigo-50 px-3 py-1
+                                   text-xs font-semibold
+                                   text-indigo-700"
+                        >
+                            Review
+                        </span>
+
+                    </div>
+
+
+                    <p
+                        class="mt-7 text-sm
+                               text-slate-500"
+                    >
+                        Under review
+                    </p>
+
+
+                    <p
+                        id="dashboardReview"
+                        class="mt-2 text-4xl
+                               font-bold
+                               tracking-tight"
+                    >
+                        0
+                    </p>
+
+
+                    <p
+                        class="mt-3 text-xs
+                               text-slate-400"
+                    >
+                        Currently being reviewed
+                    </p>
+
+                </article>
+
+
+                <!-- In Progress -->
+
+                <article
+                    data-reveal
+                    class="stat-card group rounded-[2rem]
+                           border border-slate-100
+                           bg-white p-6 shadow-card
+                           transition-all duration-500
+                           hover:-translate-y-1
+                           hover:shadow-soft"
+                >
+
+                    <div
+                        class="flex items-start
+                               justify-between"
+                    >
+
+                        <div
+                            class="flex h-12 w-12
+                                   items-center
+                                   justify-center
+                                   rounded-2xl
+                                   bg-purple-50
+                                   text-xl text-purple-600"
+                        >
+                            ↻
+                        </div>
+
+                        <span
+                            class="rounded-full
+                                   bg-purple-50 px-3 py-1
+                                   text-xs font-semibold
+                                   text-purple-700"
+                        >
+                            Active
+                        </span>
+
+                    </div>
+
+
+                    <p
+                        class="mt-7 text-sm
+                               text-slate-500"
+                    >
+                        In progress
+                    </p>
+
+
+                    <p
+                        id="dashboardProgress"
+                        class="mt-2 text-4xl
+                               font-bold
+                               tracking-tight"
+                    >
+                        0
+                    </p>
+
+
+                    <p
+                        class="mt-3 text-xs
+                               text-slate-400"
+                    >
+                        Issues currently being worked on
+                    </p>
+
+                </article>
+
+
+                <!-- Resolved -->
+
+                <article
+                    data-reveal
+                    class="stat-card group rounded-[2rem]
+                           border border-slate-100
+                           bg-white p-6 shadow-card
+                           transition-all duration-500
+                           hover:-translate-y-1
+                           hover:shadow-soft"
+                >
+
+                    <div
+                        class="flex items-start
+                               justify-between"
+                    >
+
+                        <div
+                            class="flex h-12 w-12
+                                   items-center
+                                   justify-center
+                                   rounded-2xl
+                                   bg-emerald-50
+                                   text-xl text-emerald-600"
+                        >
+                            ✓
+                        </div>
+
+                        <span
+                            class="rounded-full
+                                   bg-emerald-50 px-3 py-1
+                                   text-xs font-semibold
+                                   text-emerald-700"
+                        >
+                            Complete
+                        </span>
+
+                    </div>
+
+
+                    <p
+                        class="mt-7 text-sm
+                               text-slate-500"
+                    >
+                        Resolved
+                    </p>
+
+
+                    <p
+                        id="dashboardResolved"
+                        class="mt-2 text-4xl
+                               font-bold
+                               tracking-tight
+                               text-brand-600"
+                    >
+                        0
+                    </p>
+
+
+                    <p
+                        class="mt-3 text-xs
+                               text-slate-400"
+                    >
+                        Successfully resolved issues
+                    </p>
+
+                </article>
+
+
+                <!-- High Priority -->
+
+                <article
+                    data-reveal
+                    class="stat-card group rounded-[2rem]
+                           border border-slate-100
+                           bg-white p-6 shadow-card
+                           transition-all duration-500
+                           hover:-translate-y-1
+                           hover:shadow-soft"
+                >
+
+                    <div
+                        class="flex items-start
+                               justify-between"
+                    >
+
+                        <div
+                            class="flex h-12 w-12
+                                   items-center
+                                   justify-center
+                                   rounded-2xl
+                                   bg-rose-50
+                                   text-xl text-rose-600"
+                        >
+                            ⚠
+                        </div>
+
+                        <span
+                            class="rounded-full
+                                   bg-rose-50 px-3 py-1
+                                   text-xs font-semibold
+                                   text-rose-700"
+                        >
+                            Priority
+                        </span>
+
+                    </div>
+
+
+                    <p
+                        class="mt-7 text-sm
+                               text-slate-500"
+                    >
+                        High priority
+                    </p>
+
+
+                    <p
+                        id="dashboardHighPriority"
+                        class="mt-2 text-4xl
+                               font-bold
+                               tracking-tight
+                               text-rose-500"
+                    >
+                        0
+                    </p>
+
+
+                    <p
+                        class="mt-3 text-xs
+                               text-slate-400"
+                    >
+                        Issues needing attention
+                    </p>
+
+                </article>
+
+            </section>
+
+            <section
+                class="mt-8 grid gap-6
+                       lg:grid-cols-[1.15fr_0.85fr]"
+            >
+
+
+                <!-- Status Overview -->
+
+                <article
+                    data-reveal
+                    class="rounded-[2rem]
+                           border border-slate-100
+                           bg-white p-7 shadow-card
+                           lg:p-8"
+                >
+
+                    <div
+                        class="flex items-start
+                               justify-between gap-5"
+                    >
+
+                        <div>
+
+                            <p
+                                class="text-xs font-bold
+                                       uppercase
+                                       tracking-[0.18em]
+                                       text-brand-600"
+                            >
+                                Status overview
+                            </p>
+
+                            <h2
+                                class="mt-2 text-2xl
+                                       font-bold tracking-tight"
+                            >
+                                Where issues stand
+                            </h2>
+
+                        </div>
+
+
+                        <span
+                            class="rounded-full
+                                   bg-slate-50 px-3 py-1.5
+                                   text-xs font-medium
+                                   text-slate-500"
+                        >
+                            Live data
+                        </span>
+
+                    </div>
+
+
+                    <div class="mt-8 space-y-7">
+
+
+                        <!-- Reported -->
+
+                        <div>
+
+                            <div
+                                class="mb-2 flex items-center
+                                       justify-between"
+                            >
+
+                                <div
+                                    class="flex items-center
+                                           gap-2"
+                                >
+
+                                    <span
+                                        class="h-2.5 w-2.5
+                                               rounded-full
+                                               bg-amber-400"
+                                    ></span>
+
+                                    <span
+                                        class="text-sm font-medium
+                                               text-slate-600"
+                                    >
+                                        Reported
+                                    </span>
+
+                                </div>
+
+
+                                <span
+                                    id="reportedPercentage"
+                                    class="text-sm font-semibold
+                                           text-slate-700"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                class="h-2.5 overflow-hidden
+                                       rounded-full bg-slate-100"
+                            >
+
+                                <div
+                                    id="reportedBar"
+                                    class="status-bar h-full
+                                           w-0 rounded-full
+                                           bg-amber-400
+                                           transition-all
+                                           duration-[1200ms]
+                                           ease-out"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Review -->
+
+                        <div>
+
+                            <div
+                                class="mb-2 flex items-center
+                                       justify-between"
+                            >
+
+                                <div
+                                    class="flex items-center
+                                           gap-2"
+                                >
+
+                                    <span
+                                        class="h-2.5 w-2.5
+                                               rounded-full
+                                               bg-indigo-500"
+                                    ></span>
+
+                                    <span
+                                        class="text-sm font-medium
+                                               text-slate-600"
+                                    >
+                                        Under Review
+                                    </span>
+
+                                </div>
+
+
+                                <span
+                                    id="reviewPercentage"
+                                    class="text-sm font-semibold
+                                           text-slate-700"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                class="h-2.5 overflow-hidden
+                                       rounded-full bg-slate-100"
+                            >
+
+                                <div
+                                    id="reviewBar"
+                                    class="status-bar h-full
+                                           w-0 rounded-full
+                                           bg-indigo-500
+                                           transition-all
+                                           duration-[1200ms]
+                                           ease-out"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- In Progress -->
+
+                        <div>
+
+                            <div
+                                class="mb-2 flex items-center
+                                       justify-between"
+                            >
+
+                                <div
+                                    class="flex items-center
+                                           gap-2"
+                                >
+
+                                    <span
+                                        class="h-2.5 w-2.5
+                                               rounded-full
+                                               bg-purple-500"
+                                    ></span>
+
+                                    <span
+                                        class="text-sm font-medium
+                                               text-slate-600"
+                                    >
+                                        In Progress
+                                    </span>
+
+                                </div>
+
+
+                                <span
+                                    id="progressPercentage"
+                                    class="text-sm font-semibold
+                                           text-slate-700"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                class="h-2.5 overflow-hidden
+                                       rounded-full bg-slate-100"
+                            >
+
+                                <div
+                                    id="progressBar"
+                                    class="status-bar h-full
+                                           w-0 rounded-full
+                                           bg-purple-500
+                                           transition-all
+                                           duration-[1200ms]
+                                           ease-out"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Resolved -->
+
+                        <div>
+
+                            <div
+                                class="mb-2 flex items-center
+                                       justify-between"
+                            >
+
+                                <div
+                                    class="flex items-center
+                                           gap-2"
+                                >
+
+                                    <span
+                                        class="h-2.5 w-2.5
+                                               rounded-full
+                                               bg-emerald-500"
+                                    ></span>
+
+                                    <span
+                                        class="text-sm font-medium
+                                               text-slate-600"
+                                    >
+                                        Resolved
+                                    </span>
+
+                                </div>
+
+
+                                <span
+                                    id="resolvedPercentage"
+                                    class="text-sm font-semibold
+                                           text-slate-700"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                class="h-2.5 overflow-hidden
+                                       rounded-full bg-slate-100"
+                            >
+
+                                <div
+                                    id="resolvedBar"
+                                    class="status-bar h-full
+                                           w-0 rounded-full
+                                           bg-emerald-500
+                                           transition-all
+                                           duration-[1200ms]
+                                           ease-out"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- Resolution Card -->
+
+                <article
+                    data-reveal
+                    class="relative overflow-hidden
+                           rounded-[2rem]
+                           bg-gradient-to-br
+                           from-brand-700
+                           via-brand-600
+                           to-emerald-500
+                           p-8 text-white
+                           shadow-soft"
+                >
+
+                    <div
+                        class="pointer-events-none absolute
+                               -right-20 -top-20
+                               h-64 w-64 rounded-full
+                               bg-white/10 blur-2xl"
+                    ></div>
+
+                    <div
+                        class="pointer-events-none absolute
+                               -bottom-20 -left-20
+                               h-64 w-64 rounded-full
+                               bg-indigo-400/15 blur-2xl"
+                    ></div>
+
+
+                    <div class="relative">
+
+                        <p
+                            class="text-xs font-bold uppercase
+                                   tracking-[0.18em]
+                                   text-brand-100"
+                        >
+                            Resolution rate
+                        </p>
+
+
+                        <div
+                            class="mt-6 flex items-end
+                                   gap-2"
+                        >
+
+                            <span
+                                id="resolutionRate"
+                                class="text-6xl font-bold
+                                       tracking-tight"
+                            >
+                                0%
+                            </span>
+
+                        </div>
+
+
+                        <p
+                            class="mt-5 max-w-sm
+                                   text-sm leading-6
+                                   text-brand-50/90"
+                        >
+                            Percentage of reported issues
+                            that have reached a resolved status.
+                        </p>
+
+
+                        <!-- Circular-style visual -->
+
+                        <div class="mt-10">
+
+                            <div
+                                class="relative h-3
+                                       overflow-hidden
+                                       rounded-full
+                                       bg-white/20"
+                            >
+
+                                <div
+                                    id="resolutionBar"
+                                    class="h-full w-0
+                                           rounded-full
+                                           bg-white
+                                           transition-all
+                                           duration-[1400ms]
+                                           ease-out"
+                                ></div>
+
+                            </div>
+
+
+                            <div
+                                class="mt-3 flex
+                                       justify-between
+                                       text-xs
+                                       text-brand-100"
+                            >
+
+                                <span>
+                                    Community progress
+                                </span>
+
+                                <span>
+                                    Keep reporting
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+            <section
+                class="mt-8"
+            >
+
+                <div
+                    data-reveal
+                    class="flex flex-col
+                           justify-between gap-4
+                           sm:flex-row sm:items-end"
+                >
+
+                    <div>
+
+                        <p
+                            class="text-xs font-bold
+                                   uppercase
+                                   tracking-[0.18em]
+                                   text-brand-600"
+                        >
+                            Recent activity
+                        </p>
+
+                        <h2
+                            class="mt-2 text-2xl
+                                   font-bold tracking-tight"
+                        >
+                            Latest reported issues
+                        </h2>
+
+                    </div>
+
+
+                    <a
+                        href="../dev3/issues.html"
+                        class="group inline-flex
+                               items-center gap-2
+                               text-sm font-semibold
+                               text-brand-700"
+                    >
+
+                        View all issues
+
+                        <span
+                            class="transition-transform
+                                   duration-300
+                                   group-hover:translate-x-1"
+                        >
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <!-- Dynamic issue list -->
+
+                <div
+                    id="recentIssues"
+                    class="mt-6 grid gap-4
+                           md:grid-cols-2
+                           xl:grid-cols-3"
+                >
+                    <!-- JavaScript will insert issues here -->
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+    <footer
+        class="border-t border-slate-200 bg-white"
+    >
+
+        <div
+            class="mx-auto max-w-7xl
+                   px-6 py-10 lg:px-8"
+        >
+
+            <div
+                class="flex flex-col gap-5
+                       sm:flex-row sm:items-center
+                       sm:justify-between"
+            >
+
+                <div>
+
+                    <div
+                        class="text-lg font-bold"
+                    >
+                        FixMyArea
+                    </div>
+
+                    <p
+                        class="mt-1 text-sm text-slate-400"
+                    >
+                        Better places. Together.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="flex flex-wrap
+                           items-center gap-5
+                           text-sm text-slate-500"
+                >
+
+                    <a
+                        href="home.html"
+                        class="transition
+                               hover:text-brand-600"
+                    >
+                        Home
+                    </a>
+
+                    <a
+                        href="dashboard.html"
+                        class="transition
+                               hover:text-brand-600"
+                    >
+                        Dashboard
+                    </a>
+
+                    <a
+                        href="../dev3/issues.html"
+                        class="transition
+                               hover:text-brand-600"
+                    >
+                        Explore Issues
+                    </a>
+
+                </div>
+
+
+                <p
+                    class="text-sm text-slate-400"
+                >
+                    © 2026 FixMyArea
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Developer 1 JavaScript -->
+
+    <script src="../../js/dev1/dashboard.js"></script>
+
+</body>
+</html>
