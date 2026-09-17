@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FixMyArea - Explore Issues</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background: linear-gradient(180deg, #f8fbff 0%, #edf5ff 100%);
+      }
+      .soft-panel {
+        background: rgba(255,255,255,0.88);
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        backdrop-filter: blur(8px);
+      }
+      .nav-link {
+        position: relative;
+        transition: color 0.2s ease;
+      }
+      .nav-link:hover {
+        color: #dbeafe;
+      }
+      .nav-link.active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -8px;
+        height: 2px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.9);
+      }
+      .issue-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .issue-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 35px rgba(37, 99, 235, 0.14);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-800 min-h-screen">
+    <nav class="bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 text-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-5 py-4 flex justify-between items-center">
+        <a href="../../index.html" class="text-2xl font-bold tracking-tight">FixMyArea</a>
+        <div class="hidden md:flex gap-6 text-sm font-medium">
+          <a href="../../index.html" class="nav-link relative hover:text-blue-100">Home</a>
+          <a href="../../pages/dev1/dashboard.html" class="nav-link relative hover:text-blue-100">Dashboard</a>
+          <a href="../../pages/dev2/report.html" class="nav-link relative hover:text-blue-100">Report Issue</a>
+          <a href="issues.html" class="nav-link active relative font-bold">Explore Issues</a>
+          <a href="my-reports.html" class="nav-link relative hover:text-blue-100">My Reports</a>
+          <a href="../../pages/dev4/admin.html" class="nav-link relative hover:text-blue-100">Admin</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-5 py-10">
+      <div class="soft-panel rounded-3xl p-6 md:p-8 mb-8 border-l-4 border-blue-500 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">Community updates</p>
+            <h1 class="mt-3 text-3xl md:text-4xl font-black text-gray-900">Explore Community Issues</h1>
+            <p class="mt-2 text-gray-600 max-w-2xl">Find, support and track problems reported in your area.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3 min-w-[220px]">
+            <div class="rounded-2xl bg-blue-50 px-4 py-3 text-center">
+              <p class="text-xs uppercase tracking-wide text-blue-700">Reports</p>
+              <p class="mt-1 text-2xl font-black text-blue-800" id="statReports">0</p>
+            </div>
+            <div class="rounded-2xl bg-emerald-50 px-4 py-3 text-center">
+              <p class="text-xs uppercase tracking-wide text-emerald-700">Resolved</p>
+              <p class="mt-1 text-2xl font-black text-emerald-800" id="statResolved">0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="soft-panel p-5 rounded-2xl shadow-sm mb-6">
+        <label class="block font-semibold mb-2 text-gray-700">Search Issues</label>
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search by title, ID, category or area..."
+          class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-400"
+        >
+      </div>
+
+      <div class="soft-panel p-5 rounded-2xl shadow-sm mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-sm font-semibold mb-2">Category</label>
+            <select id="categoryFilter" class="w-full border border-gray-300 rounded-xl px-3 py-3">
+              <option value="all">All Categories</option>
+              <option value="pothole">Pothole</option>
+              <option value="garbage">Garbage</option>
+              <option value="streetlight">Streetlight</option>
+              <option value="water leakage">Water Leakage</option>
+              <option value="drainage">Drainage</option>
+              <option value="road damage">Road Damage</option>
+              <option value="public property">Public Property</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-2">Status</label>
+            <select id="statusFilter" class="w-full border border-gray-300 rounded-xl px-3 py-3">
+              <option value="all">All Status</option>
+              <option value="reported">Reported</option>
+              <option value="under-review">Under Review</option>
+              <option value="in-progress">In Progress</option>
+              <option value="resolved">Resolved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-2">Priority</label>
+            <select id="priorityFilter" class="w-full border border-gray-300 rounded-xl px-3 py-3">
+              <option value="all">All Priorities</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-2">Sort By</label>
+            <select id="sortFilter" class="w-full border border-gray-300 rounded-xl px-3 py-3">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="upvotes">Most Upvoted</option>
+            </select>
+          </div>
+        </div>
+
+        <button data-reset-filters class="mt-5 bg-slate-800 text-white px-5 py-2.5 rounded-xl hover:bg-slate-700 transition shadow-sm hover:shadow-md">
+          Reset Filters
+        </button>
+      </div>
+
+      <div class="flex justify-between items-center mb-5">
+        <h2 class="text-xl font-bold text-gray-900">Reported Issues</h2>
+        <span id="issueCount" class="text-sm font-medium text-gray-500 bg-white/80 px-3 py-1.5 rounded-full shadow-sm border border-gray-200"></span>
+      </div>
+
+      <div id="issuesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <div id="emptyState" class="hidden soft-panel rounded-2xl p-12 text-center shadow-sm">
+        <div class="text-5xl mb-4">🔍</div>
+        <h3 class="text-xl font-bold text-gray-900">No issues found</h3>
+        <p class="text-gray-500 mt-2">Try changing your search or filters.</p>
+        <button data-reset-filters class="mt-5 bg-blue-600 text-white px-5 py-2.5 rounded-xl hover:bg-blue-700 shadow-sm">Reset Filters</button>
+      </div>
+    </main>
+
+    <script src="../../js/dev3/script.js"></script>
+    <script src="../../js/dev3/issues.js"></script>
+  </body>
+</html>
