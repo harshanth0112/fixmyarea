@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citizen Login — FixMyArea</title>
+  <meta name="description" content="Citizen login and registration for FixMyArea.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }, colors: { brand: { DEFAULT: '#536B4F', hover: '#435740', soft: '#DDE6D8' }, canvas: '#F7F6F2', surface: '#FFFFFF', borderLight: '#E7E5E0' } } } };
+  </script>
+  <style>
+    body { background-color: #F7F6F2; color: #202020; }
+    #user-form-panel { transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease; max-height: 0; opacity: 0; overflow: hidden; }
+    #user-form-panel.open { max-height: 900px; opacity: 1; }
+    .input-field { width: 100%; padding: 0.55rem 0.875rem; background: #fff; border: 1px solid #E7E5E0; border-radius: 0.75rem; font-size: 0.875rem; color: #202020; outline: none; transition: box-shadow 0.15s, border-color 0.15s; }
+    .input-field:focus { border-color: #536B4F; box-shadow: 0 0 0 3px rgba(83,107,79,0.12); }
+    .input-label { display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #555; margin-bottom: 0.3rem; }
+    .field-wrap { position: relative; }
+    .eye-btn { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); color: #888; cursor: pointer; }
+    .section-divider { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; border-bottom: 1px solid #E7E5E0; padding-bottom: 0.4rem; margin-bottom: 0.75rem; }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans antialiased">
+  <div id="site-header"></div>
+
+  <main class="flex-grow flex items-start justify-center px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-lg w-full">
+      <div class="bg-white border border-[#E7E5E0] rounded-3xl p-8 sm:p-10 shadow-sm">
+        <div class="text-center mb-8">
+          <div class="w-12 h-12 rounded-2xl bg-[#DDE6D8] text-[#536B4F] flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          </div>
+          <h1 class="text-2xl font-bold text-[#202020] tracking-tight">Citizen Login</h1>
+          <p class="text-xs text-[#737373] mt-1.5">Create an account or continue as a resident</p>
+        </div>
+
+        <div class="space-y-4">
+          <form id="user-login-form" class="bg-[#FAFAF8] border border-[#E7E5E0] rounded-2xl p-5 space-y-4 mt-1">
+            <div>
+              <label class="input-label" for="login-username">Username *</label>
+              <input type="text" id="login-username" class="input-field" placeholder="Enter your username" required>
+            </div>
+
+            <div>
+              <label class="input-label" for="login-password">Password *</label>
+              <div class="field-wrap">
+                <input type="password" id="login-password" class="input-field pr-10" placeholder="Enter your password" required>
+                <button type="button" class="eye-btn" id="toggle-pwd" tabindex="-1" title="Show/hide password">
+                  <svg id="eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <p id="form-error" class="hidden text-xs text-[#B91C1C] bg-[#FEE2E2] px-3 py-2 rounded-xl"></p>
+
+            <button type="submit" class="w-full py-2.5 text-sm font-semibold text-white bg-[#536B4F] hover:bg-[#435740] rounded-xl shadow-sm transition-all">
+              Sign In
+            </button>
+          </form>
+
+          <div class="flex items-center justify-between text-xs text-[#737373] pt-2">
+            <a href="login.html" class="hover:text-[#202020] underline">Back to login choices</a>
+            <a href="register.html" class="hover:text-[#202020] underline">Create account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script type="module">
+    import { initLayout } from './js/layout.js';
+    import { setCurrentUser } from './js/auth.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initLayout('login');
+
+      const form = document.getElementById('user-login-form');
+      const formError = document.getElementById('form-error');
+      const pwdInput = document.getElementById('login-password');
+      const togglePwd = document.getElementById('toggle-pwd');
+      const eyeIcon = document.getElementById('eye-icon');
+
+      togglePwd.addEventListener('click', () => {
+        const isText = pwdInput.type === 'text';
+        pwdInput.type = isText ? 'password' : 'text';
+        eyeIcon.innerHTML = isText
+          ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>`
+          : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>`;
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        formError.classList.add('hidden');
+
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+
+        if (!username || !password) {
+          formError.textContent = 'Please enter both username and password.';
+          formError.classList.remove('hidden');
+          return;
+        }
+
+        setCurrentUser({
+          role: 'user',
+          name: username,
+          username,
+          email: '',
+          phone: '',
+          address: '',
+          city: '',
+          pincode: ''
+        });
+
+        window.location.href = 'user.html';
+      });
+    });
+  </script>
+</body>
+</html>

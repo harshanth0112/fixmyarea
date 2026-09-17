@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixMyArea — Civic Issue Reporting & Community Progress</title>
+  <meta name="description" content="A clean, knowledge-base-inspired civic issue reporting and tracking website for local communities.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#536B4F',
+              hover: '#435740',
+              soft: '#DDE6D8',
+            },
+            canvas: '#F7F6F2',
+            surface: '#FFFFFF',
+            borderLight: '#E7E5E0',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F7F6F2;
+      color: #202020;
+    }
+  </style>
+
+  <!-- Auth Guard: Redirect to login if not logged in -->
+  <script src="js/auth-guard.js"></script>
+</head>
+<body class="min-h-full flex flex-col font-sans antialiased selection:bg-[#DDE6D8] selection:text-[#202020]">
+
+  <!-- Shared Header Target -->
+  <div id="site-header"></div>
+
+  <!-- Main Page Content -->
+  <main class="flex-grow">
+    <!-- Hero Section -->
+    <section class="pt-16 pb-14 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EFECE6] border border-[#E0DCD4] text-xs font-medium text-[#555] mb-6">
+        <span class="w-2 h-2 rounded-full bg-[#536B4F]"></span>
+        <span>Community Issue Resolution</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-[#202020] mb-4 leading-tight">
+        What’s happening in your area?
+      </h1>
+      <p class="text-lg text-[#737373] max-w-2xl mx-auto mb-8 leading-relaxed font-normal">
+        Report local problems, discover community issues, and follow progress toward better neighborhoods.
+      </p>
+
+      <!-- Prominent Search Bar -->
+      <div class="relative max-w-xl mx-auto mb-8">
+        <div class="relative flex items-center">
+          <span class="absolute left-4 text-[#888]">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </span>
+          <input type="text" 
+                 id="home-search-input" 
+                 placeholder="Search for a neighborhood issue, area, or ID..." 
+                 class="w-full pl-11 pr-10 py-3.5 bg-white border border-[#E7E5E0] rounded-2xl shadow-sm text-sm text-[#202020] placeholder-[#888] focus:outline-none focus:ring-2 focus:ring-[#536B4F] focus:border-transparent transition-all">
+          <button id="clear-search-btn" class="hidden absolute right-4 text-[#888] hover:text-[#202020]">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Live Search Dropdown -->
+        <div id="search-results-dropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-white border border-[#E7E5E0] rounded-xl shadow-lg z-30 text-left overflow-hidden">
+        </div>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex items-center justify-center gap-3">
+        <a href="report.html" class="px-5 py-2.5 rounded-full text-sm font-medium text-white bg-[#536B4F] hover:bg-[#435740] shadow-sm transition-all">
+          Report an Issue
+        </a>
+        <a href="issues.html" class="px-5 py-2.5 rounded-full text-sm font-medium text-[#202020] bg-white border border-[#E7E5E0] hover:bg-[#F7F6F2] transition-all">
+          Explore Issues
+        </a>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-[#202020]">Explore common issues</h2>
+          <p class="text-sm text-[#737373]">Browse reported neighborhood concerns by category</p>
+        </div>
+        <a href="issues.html" class="text-sm font-medium text-[#536B4F] hover:underline flex items-center gap-1">
+          View all categories &rarr;
+        </a>
+      </div>
+      <div id="category-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Generated by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Featured Community Reports -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-[#202020]">Recent reports from the community</h2>
+          <p class="text-sm text-[#737373]">See what people are reporting in their neighborhoods</p>
+        </div>
+        <a href="issues.html" class="text-sm font-medium text-[#536B4F] hover:underline flex items-center gap-1">
+          Explore all reports &rarr;
+        </a>
+      </div>
+      <div id="recent-issues-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Generated by JavaScript -->
+      </div>
+    </section>
+
+    <!-- How the Process Works -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-8 sm:p-12">
+        <div class="max-w-2xl mx-auto text-center mb-10">
+          <h2 class="text-2xl font-bold text-[#202020] mb-2">From report to resolution</h2>
+          <p class="text-sm text-[#737373]">A clear, transparent workflow to ensure community awareness</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-left">
+          <div class="space-y-2">
+            <span class="text-xs font-mono font-bold text-[#536B4F] bg-[#DDE6D8] px-2.5 py-1 rounded-md">01</span>
+            <h3 class="font-semibold text-base text-[#202020] pt-2">Spot an issue</h3>
+            <p class="text-xs text-[#737373] leading-relaxed">Notice a pothole, broken light, or blocked drain in your neighborhood.</p>
+          </div>
+          <div class="space-y-2">
+            <span class="text-xs font-mono font-bold text-[#536B4F] bg-[#DDE6D8] px-2.5 py-1 rounded-md">02</span>
+            <h3 class="font-semibold text-base text-[#202020] pt-2">Submit report</h3>
+            <p class="text-xs text-[#737373] leading-relaxed">Share concise details, location landmarks, and urgency through our simple form.</p>
+          </div>
+          <div class="space-y-2">
+            <span class="text-xs font-mono font-bold text-[#536B4F] bg-[#DDE6D8] px-2.5 py-1 rounded-md">03</span>
+            <h3 class="font-semibold text-base text-[#202020] pt-2">Follow progress</h3>
+            <p class="text-xs text-[#737373] leading-relaxed">Track transparent status markers from Under Review to Action in Progress.</p>
+          </div>
+          <div class="space-y-2">
+            <span class="text-xs font-mono font-bold text-[#536B4F] bg-[#DDE6D8] px-2.5 py-1 rounded-md">04</span>
+            <h3 class="font-semibold text-base text-[#202020] pt-2">See the change</h3>
+            <p class="text-xs text-[#737373] leading-relaxed">Celebrate resolution and improved neighborhood infrastructure together.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Call-to-Action -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+      <div class="bg-[#DDE6D8]/60 border border-[#CBD8C4] rounded-2xl p-8 text-center sm:p-12">
+        <h2 class="text-2xl sm:text-3xl font-bold text-[#202020] mb-3">Your neighborhood starts with you.</h2>
+        <p class="text-sm sm:text-base text-[#555] max-w-xl mx-auto mb-6 leading-relaxed">
+          One small report can help bring attention to a problem that affects everyone around you.
+        </p>
+        <a href="report.html" class="inline-flex items-center px-6 py-3 rounded-full text-sm font-medium text-white bg-[#536B4F] hover:bg-[#435740] shadow-sm transition-all">
+          Report an Issue Now
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shared Footer Target -->
+  <div id="site-footer"></div>
+
+  <!-- Shared Main Script (ES Module) -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

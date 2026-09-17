@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How It Works — FixMyArea</title>
+  <meta name="description" content="Learn how citizens report, follow, and resolve neighborhood problems together.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#536B4F',
+              hover: '#435740',
+              soft: '#DDE6D8',
+            },
+            canvas: '#F7F6F2',
+            surface: '#FFFFFF',
+            borderLight: '#E7E5E0',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F7F6F2;
+      color: #202020;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans antialiased selection:bg-[#DDE6D8] selection:text-[#202020]">
+
+  <!-- Shared Header Container -->
+  <div id="site-header"></div>
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
+    
+    <!-- Title Section -->
+    <div class="text-center mb-16">
+      <span class="inline-flex items-center px-3 py-1 rounded-full bg-[#DDE6D8] text-xs font-semibold text-[#435740] mb-3">
+        Editorial Guide
+      </span>
+      <h1 class="text-4xl sm:text-5xl font-bold text-[#202020] tracking-tight mb-4">
+        How FixMyArea Works
+      </h1>
+      <p class="text-base sm:text-lg text-[#737373] max-w-xl mx-auto leading-relaxed">
+        Making it easier for citizens to bring attention to the everyday problems in their communities.
+      </p>
+    </div>
+
+    <!-- Step by Step Cards -->
+    <div class="space-y-6">
+      
+      <!-- Step 1 -->
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-8 transition-all hover:border-[#D1CECA] flex flex-col sm:flex-row items-start gap-6">
+        <div class="w-12 h-12 rounded-xl bg-[#DDE6D8] text-[#536B4F] flex items-center justify-center font-mono font-bold text-lg shrink-0">
+          01
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-[#202020] mb-2">Notice the issue</h2>
+          <p class="text-sm text-[#555] leading-relaxed mb-3">
+            Spot a problem affecting your safety or daily commute—such as an open pothole, damaged road divider, overflowing dumpster, or flickering streetlight.
+          </p>
+          <span class="inline-block text-xs font-medium text-[#737373] bg-[#F7F6F2] px-2.5 py-1 rounded-md border border-[#E7E5E0]">
+            Take note of location landmarks & severity
+          </span>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-8 transition-all hover:border-[#D1CECA] flex flex-col sm:flex-row items-start gap-6">
+        <div class="w-12 h-12 rounded-xl bg-[#DDE6D8] text-[#536B4F] flex items-center justify-center font-mono font-bold text-lg shrink-0">
+          02
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-[#202020] mb-2">Submit a clean report</h2>
+          <p class="text-sm text-[#555] leading-relaxed mb-3">
+            Use our simplified report form to enter the title, category, neighborhood area, and optional landmark. Every report receives a unique tracking identifier.
+          </p>
+          <span class="inline-block text-xs font-medium text-[#737373] bg-[#F7F6F2] px-2.5 py-1 rounded-md border border-[#E7E5E0]">
+            Simulated submission without server upload
+          </span>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-8 transition-all hover:border-[#D1CECA] flex flex-col sm:flex-row items-start gap-6">
+        <div class="w-12 h-12 rounded-xl bg-[#DDE6D8] text-[#536B4F] flex items-center justify-center font-mono font-bold text-lg shrink-0">
+          03
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-[#202020] mb-2">Discover community issues</h2>
+          <p class="text-sm text-[#555] leading-relaxed mb-3">
+            Search and explore what other residents have reported. Filter issues by category (roads, lights, waste, drainage) to understand neighborhood trends.
+          </p>
+          <span class="inline-block text-xs font-medium text-[#737373] bg-[#F7F6F2] px-2.5 py-1 rounded-md border border-[#E7E5E0]">
+            Search by area or keyword instantly
+          </span>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-8 transition-all hover:border-[#D1CECA] flex flex-col sm:flex-row items-start gap-6">
+        <div class="w-12 h-12 rounded-xl bg-[#DDE6D8] text-[#536B4F] flex items-center justify-center font-mono font-bold text-lg shrink-0">
+          04
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-[#202020] mb-2">Follow the progress timeline</h2>
+          <p class="text-sm text-[#555] leading-relaxed mb-3">
+            Follow our 4-stage transparent status lifecycle: Reported &rarr; Under Review &rarr; Action in Progress &rarr; Resolved.
+          </p>
+          <span class="inline-block text-xs font-medium text-[#737373] bg-[#F7F6F2] px-2.5 py-1 rounded-md border border-[#E7E5E0]">
+            Community visibility from start to finish
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Call to action block -->
+    <div class="mt-14 p-8 rounded-2xl bg-[#DDE6D8]/50 border border-[#CBD8C4] text-center">
+      <h3 class="text-xl font-bold text-[#202020] mb-2">Ready to test the workflow?</h3>
+      <p class="text-sm text-[#555] max-w-md mx-auto mb-6">
+        Experience submitting an issue or browsing existing reports across the city.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <a href="report.html" class="px-5 py-2.5 rounded-full text-sm font-medium text-white bg-[#536B4F] hover:bg-[#435740] shadow-sm transition-all">
+          Report an Issue
+        </a>
+        <a href="issues.html" class="px-5 py-2.5 rounded-full text-sm font-medium text-[#202020] bg-white border border-[#E7E5E0] hover:bg-[#F7F6F2] transition-all">
+          Explore Reports
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Shared Footer Container -->
+  <div id="site-footer"></div>
+
+  <script type="module">
+    import { initLayout } from './js/layout.js';
+    document.addEventListener("DOMContentLoaded", () => {
+      initLayout("how-it-works");
+    });
+  </script>
+</body>
+</html>
