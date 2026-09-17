@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — FixMyArea</title>
+  <meta name="description" content="Admin login for FixMyArea moderation panel.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }, colors: { brand: { DEFAULT: '#536B4F', hover: '#435740', soft: '#DDE6D8' }, canvas: '#F7F6F2', surface: '#FFFFFF', borderLight: '#E7E5E0' } } } };
+  </script>
+  <style>
+    body { background-color: #F7F6F2; color: #202020; }
+    .input-field { width: 100%; padding: 0.7rem 0.9rem; background: #fff; border: 1px solid #E7E5E0; border-radius: 0.75rem; font-size: 0.875rem; color: #202020; outline: none; transition: box-shadow 0.15s, border-color 0.15s; }
+    .input-field:focus { border-color: #536B4F; box-shadow: 0 0 0 3px rgba(83,107,79,0.12); }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans antialiased">
+  <div id="site-header"></div>
+
+  <main class="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-md w-full">
+      <div class="bg-white border border-[#E7E5E0] rounded-3xl p-8 shadow-sm">
+        <div class="text-center mb-8">
+          <div class="w-12 h-12 rounded-2xl bg-[#FEF3C7] text-[#B45309] flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h1 class="text-2xl font-bold text-[#202020] tracking-tight">Admin Login</h1>
+          <p class="text-xs text-[#737373] mt-1.5">Access the moderation dashboard</p>
+        </div>
+
+        <form id="admin-login-form" class="space-y-4">
+          <div>
+            <label for="admin-username" class="block text-xs font-semibold uppercase tracking-wider text-[#555] mb-1.5">Username</label>
+            <input id="admin-username" type="text" class="input-field" placeholder="admin" required>
+          </div>
+
+          <div>
+            <label for="admin-password" class="block text-xs font-semibold uppercase tracking-wider text-[#555] mb-1.5">Password</label>
+            <input id="admin-password" type="password" class="input-field" placeholder="Enter password" required>
+          </div>
+
+          <p id="admin-error" class="hidden text-xs text-[#B91C1C] bg-[#FEE2E2] px-3 py-2 rounded-xl"></p>
+
+          <button type="submit" class="w-full py-3 text-sm font-semibold text-white bg-[#536B4F] hover:bg-[#435740] rounded-xl shadow-sm transition-all">
+            Sign In as Admin
+          </button>
+        </form>
+
+        <div class="mt-5 text-center text-xs text-[#737373]">
+          <a href="login.html" class="hover:text-[#202020] underline">Back to login choices</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script type="module">
+    import { initLayout } from './js/layout.js';
+    import { setCurrentUser } from './js/auth.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initLayout('login');
+
+      const form = document.getElementById('admin-login-form');
+      const errorBox = document.getElementById('admin-error');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        errorBox.classList.add('hidden');
+
+        const username = document.getElementById('admin-username').value.trim();
+        const password = document.getElementById('admin-password').value.trim();
+
+        if (!username || !password) {
+          errorBox.textContent = 'Please enter both username and password.';
+          errorBox.classList.remove('hidden');
+          return;
+        }
+
+        if (username.toLowerCase() !== 'admin' || password !== 'admin123') {
+          errorBox.textContent = 'Invalid admin credentials. Try admin / admin123';
+          errorBox.classList.remove('hidden');
+          return;
+        }
+
+        setCurrentUser({ role: 'admin', name: 'Admin Moderator', email: 'admin@fixmyarea.local' });
+        window.location.href = 'pages/dev4/admin.html';
+      });
+    });
+  </script>
+</body>
+</html>

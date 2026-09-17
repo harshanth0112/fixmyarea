@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue Details — FixMyArea</title>
+  <meta name="description" content="View reported issue details, location, description, and status history timeline.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#536B4F',
+              hover: '#435740',
+              soft: '#DDE6D8',
+            },
+            canvas: '#F7F6F2',
+            surface: '#FFFFFF',
+            borderLight: '#E7E5E0',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F7F6F2;
+      color: #202020;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans antialiased selection:bg-[#DDE6D8] selection:text-[#202020]">
+
+  <!-- Shared Header Container -->
+  <div id="site-header"></div>
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+    
+    <!-- Breadcrumb & Back Button -->
+    <div class="flex items-center gap-2 text-xs text-[#737373] mb-6">
+      <a href="index.html" class="hover:text-[#202020]">Home</a>
+      <span>/</span>
+      <a href="issues.html" class="hover:text-[#202020]">Issues</a>
+      <span>/</span>
+      <span class="text-[#202020] font-medium" id="issue-id">Loading...</span>
+    </div>
+
+    <!-- Issue Details Content Container -->
+    <div id="issue-details-content" class="space-y-8">
+      
+      <!-- Top Title & Badge Block -->
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-6 sm:p-8 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div class="flex items-center gap-3">
+            <span id="issue-status-badge"></span>
+            <span id="issue-urgency" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#F2EFE9] text-[#555]"></span>
+          </div>
+          <span class="text-xs text-[#888]">Reported on <strong id="issue-date" class="text-[#555]"></strong></span>
+        </div>
+
+        <h1 id="issue-title" class="text-2xl sm:text-3xl font-bold text-[#202020] tracking-tight mb-4">
+          Loading issue...
+        </h1>
+
+        <p id="issue-description" class="text-base text-[#555] leading-relaxed mb-6">
+        </p>
+
+        <!-- Issue Interactive Action Bar -->
+        <div class="flex flex-wrap items-center gap-3 py-3 px-4 rounded-xl bg-[#F7F6F2] border border-[#E7E5E0] mb-6">
+          <button id="detail-upvote-btn" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold text-[#202020] bg-white border border-[#E7E5E0] hover:border-[#536B4F] hover:text-[#536B4F] shadow-xs transition-all">
+            <svg class="w-4 h-4 text-[#536B4F]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+            <span>Upvote Issue</span>
+            <span id="detail-upvote-count" class="ml-1 px-1.5 py-0.2 rounded-full bg-[#EFECE6] text-[10px] font-bold">12</span>
+          </button>
+          
+          <button id="detail-copy-link-btn" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium text-[#555] bg-white border border-[#E7E5E0] hover:text-[#202020] shadow-xs transition-all">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+            <span>Copy Link</span>
+          </button>
+
+          <span id="detail-action-alert" class="hidden text-xs font-semibold text-[#2D6A28] animate-pulse ml-auto"></span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#F2EFE9] text-xs">
+          <div>
+            <span class="text-[#888] uppercase tracking-wider block font-semibold mb-1">Category</span>
+            <span id="issue-category" class="font-medium text-[#202020] text-sm"></span>
+          </div>
+          <div>
+            <span class="text-[#888] uppercase tracking-wider block font-semibold mb-1">Neighborhood Area</span>
+            <span id="issue-area" class="font-medium text-[#202020] text-sm"></span>
+          </div>
+          <div>
+            <span class="text-[#888] uppercase tracking-wider block font-semibold mb-1">Nearby Landmark</span>
+            <span id="issue-landmark" class="font-medium text-[#202020] text-sm"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status Progress Timeline Card -->
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-6 sm:p-8 shadow-sm">
+        <div class="mb-6">
+          <h2 class="text-lg font-bold text-[#202020]">Status Progression Timeline</h2>
+          <p class="text-xs text-[#737373]">Live simulated updates as the report advances toward resolution.</p>
+        </div>
+
+        <div id="status-timeline" class="max-w-md">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Related Issues in Same Category -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-[#202020]">Similar reports in this category</h2>
+          <a href="issues.html" class="text-xs font-medium text-[#536B4F] hover:underline">View all &rarr;</a>
+        </div>
+        <div id="related-issues-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 404 / Not Found State -->
+    <div id="issue-not-found" class="hidden text-center py-16 bg-white border border-[#E7E5E0] rounded-2xl p-8">
+      <div class="w-12 h-12 mx-auto rounded-full bg-[#F2EFE9] flex items-center justify-center text-[#888] mb-4">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      </div>
+      <h2 class="text-xl font-bold text-[#202020] mb-2">Report Not Found</h2>
+      <p id="not-found-message" class="text-sm text-[#737373] max-w-sm mx-auto mb-6">
+        The requested report ID could not be located in our civic database.
+      </p>
+      <a href="issues.html" class="inline-flex items-center px-5 py-2.5 rounded-full text-sm font-medium text-white bg-[#536B4F] hover:bg-[#435740] shadow-sm transition-all">
+        Browse All Issues
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Shared Footer Container -->
+  <div id="site-footer"></div>
+
+  <!-- Shared Details Script -->
+  <script type="module" src="js/issue-details.js"></script>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — FixMyArea</title>
+  <meta name="description" content="Simulated admin moderation and status tracking panel for FixMyArea.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#536B4F',
+              hover: '#435740',
+              soft: '#DDE6D8',
+            },
+            canvas: '#F7F6F2',
+            surface: '#FFFFFF',
+            borderLight: '#E7E5E0',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F7F6F2;
+      color: #202020;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans antialiased selection:bg-[#DDE6D8] selection:text-[#202020]">
+
+  <!-- Shared Header Container -->
+  <div id="site-header"></div>
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+    <!-- Admin Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-[#202020] tracking-tight">Admin & Moderation Panel</h1>
+        <p class="text-sm text-[#737373] mt-1">Review community reports, update resolution statuses, and monitor local issues.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="admin-add-issue-btn" class="inline-flex items-center px-4 py-2 text-xs font-semibold text-white bg-[#536B4F] hover:bg-[#435740] rounded-full shadow-sm transition-all">
+          <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Quick Add Issue
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Alert / Toast Banner Notification -->
+    <div id="admin-alert-banner" class="hidden transition-all duration-300 mb-6 p-4 rounded-2xl flex items-center justify-between border shadow-sm">
+      <div class="flex items-center gap-3">
+        <div id="admin-alert-icon" class="w-8 h-8 rounded-full flex items-center justify-center shrink-0"></div>
+        <div>
+          <h4 id="admin-alert-title" class="text-sm font-bold text-[#202020]"></h4>
+          <p id="admin-alert-message" class="text-xs text-[#555] mt-0.5"></p>
+        </div>
+      </div>
+      <button id="admin-alert-close" class="text-[#888] hover:text-[#202020] p-1.5 rounded-lg">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Statistics Grid -->
+    <div id="admin-stats" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 mb-8">
+      <!-- Generated via JS -->
+    </div>
+
+    <!-- Controls & Filters -->
+    <div class="bg-white border border-[#E7E5E0] rounded-2xl p-5 mb-6 shadow-sm">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Search Input -->
+        <div>
+          <label for="admin-search" class="block text-xs font-semibold uppercase tracking-wider text-[#555] mb-1.5">Search Reports</label>
+          <input type="text" id="admin-search" placeholder="Search by title, area, ID..." 
+                 class="w-full px-3.5 py-2.5 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] placeholder-[#888] focus:outline-none focus:ring-2 focus:ring-[#536B4F]">
+        </div>
+
+        <!-- Status Filter -->
+        <div>
+          <label for="admin-status-filter" class="block text-xs font-semibold uppercase tracking-wider text-[#555] mb-1.5">Filter by Status</label>
+          <select id="admin-status-filter" class="w-full px-3.5 py-2.5 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#536B4F]">
+            <option value="all">All Statuses</option>
+            <option value="Reported">Reported</option>
+            <option value="Under Review">Under Review</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+        </div>
+
+        <!-- Category Filter -->
+        <div>
+          <label for="admin-category-filter" class="block text-xs font-semibold uppercase tracking-wider text-[#555] mb-1.5">Filter by Category</label>
+          <select id="admin-category-filter" class="w-full px-3.5 py-2.5 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#536B4F]">
+            <option value="all">All Categories</option>
+            <option value="Road & Potholes">Road & Potholes</option>
+            <option value="Streetlights">Streetlights</option>
+            <option value="Waste Management">Waste Management</option>
+            <option value="Water & Drainage">Water & Drainage</option>
+            <option value="Public Spaces">Public Spaces</option>
+            <option value="Other Issues">Other Issues</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Issues Table -->
+    <div class="bg-white border border-[#E7E5E0] rounded-2xl overflow-hidden shadow-sm">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-[#FAF9F5] border-b border-[#E7E5E0] text-[11px] font-semibold uppercase tracking-wider text-[#737373]">
+              <th class="px-4 py-3">ID</th>
+              <th class="px-4 py-3">Title & Area</th>
+              <th class="px-4 py-3">Category</th>
+              <th class="px-4 py-3">Status</th>
+              <th class="px-4 py-3">Priority</th>
+              <th class="px-4 py-3">Date</th>
+              <th class="px-4 py-3 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="admin-issues-table-body" class="divide-y divide-[#F2EFE9]">
+            <!-- Injected via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Status Update Modal -->
+  <div id="status-update-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+    <div class="bg-white rounded-2xl border border-[#E7E5E0] shadow-xl max-w-md w-full p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-[#E7E5E0]">
+        <div>
+          <h3 class="text-base font-semibold text-[#202020]">Update Issue Status</h3>
+          <p id="modal-issue-id" class="text-xs font-mono text-[#737373] mt-0.5"></p>
+        </div>
+        <button id="modal-close-btn" class="text-[#888] hover:text-[#202020] p-1 rounded-md">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div>
+        <p id="modal-issue-title" class="text-sm font-medium text-[#202020] mb-3"></p>
+        
+        <label for="modal-new-status" class="block text-xs font-semibold uppercase text-[#555] mb-1.5">Status Progression</label>
+        <select id="modal-new-status" class="w-full px-3.5 py-2.5 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#536B4F]">
+          <option value="Reported">Reported</option>
+          <option value="Under Review">Under Review</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="modal-note" class="block text-xs font-semibold uppercase text-[#555] mb-1.5">Add Progress Note (Optional)</label>
+        <textarea id="modal-note" rows="3" placeholder="e.g., Road repair team dispatched to site..."
+                  class="w-full px-3.5 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#536B4F]"></textarea>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-[#E7E5E0]">
+        <button id="modal-cancel-btn" class="px-4 py-2 text-sm font-medium text-[#555] hover:bg-[#F7F6F2] rounded-full transition-all">
+          Cancel
+        </button>
+        <button id="modal-save-btn" class="px-4 py-2 text-sm font-medium text-white bg-[#536B4F] hover:bg-[#435740] rounded-full shadow-sm transition-all">
+          Save Status
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Add Issue Modal -->
+  <div id="add-issue-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+    <div class="bg-white rounded-2xl border border-[#E7E5E0] shadow-xl max-w-lg w-full p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-[#E7E5E0]">
+        <h3 class="text-base font-semibold text-[#202020]">Add New Simulated Issue</h3>
+        <button id="add-modal-close" class="text-[#888] hover:text-[#202020] p-1 rounded-md">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="admin-new-issue-form" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Issue Title *</label>
+          <input type="text" id="new-issue-title" required placeholder="e.g. Broken pavement near junction" 
+                 class="w-full px-3.5 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#536B4F]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Category *</label>
+            <select id="new-issue-category" class="w-full px-3 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#536B4F]">
+              <option value="Road & Potholes">Road & Potholes</option>
+              <option value="Streetlights">Streetlights</option>
+              <option value="Waste Management">Waste Management</option>
+              <option value="Water & Drainage">Water & Drainage</option>
+              <option value="Public Spaces">Public Spaces</option>
+              <option value="Other Issues">Other Issues</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Priority</label>
+            <select id="new-issue-urgency" class="w-full px-3 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#536B4F]">
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Neighborhood Area *</label>
+          <input type="text" id="new-issue-area" required placeholder="e.g. Green Park Sector 4" 
+                 class="w-full px-3.5 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#536B4F]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Description *</label>
+          <textarea id="new-issue-desc" required rows="2" placeholder="Brief summary of the issue..."
+                    class="w-full px-3.5 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#536B4F]"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-[#E7E5E0]">
+          <button type="button" id="add-modal-cancel" class="px-4 py-2 text-sm font-medium text-[#555] hover:bg-[#F7F6F2] rounded-full">
+            Cancel
+          </button>
+          <button type="submit" class="px-5 py-2 text-sm font-medium text-white bg-[#536B4F] hover:bg-[#435740] rounded-full shadow-sm">
+            Create Issue
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Issue Modal -->
+  <div id="edit-issue-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+    <div class="bg-white rounded-2xl border border-[#E7E5E0] shadow-xl max-w-lg w-full p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-[#E7E5E0]">
+        <div>
+          <h3 class="text-base font-semibold text-[#202020]">Edit Issue</h3>
+          <p id="edit-issue-id-display" class="text-xs font-mono text-[#737373] mt-0.5"></p>
+        </div>
+        <button id="edit-modal-close" class="text-[#888] hover:text-[#202020] p-1 rounded-md">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="admin-edit-issue-form" class="space-y-3.5">
+        <input type="hidden" id="edit-issue-hidden-id">
+
+        <div>
+          <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Issue Title *</label>
+          <input type="text" id="edit-issue-title" required placeholder="e.g. Broken pavement near junction"
+                 class="w-full px-3.5 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#1E56A0]">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Category *</label>
+            <select id="edit-issue-category" class="w-full px-3 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#1E56A0]">
+              <option value="Road &amp; Potholes">Road &amp; Potholes</option>
+              <option value="Streetlights">Streetlights</option>
+              <option value="Waste Management">Waste Management</option>
+              <option value="Water &amp; Drainage">Water &amp; Drainage</option>
+              <option value="Public Spaces">Public Spaces</option>
+              <option value="Other Issues">Other Issues</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Priority</label>
+            <select id="edit-issue-urgency" class="w-full px-3 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#1E56A0]">
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Neighborhood Area *</label>
+          <input type="text" id="edit-issue-area" required placeholder="e.g. Green Park Sector 4"
+                 class="w-full px-3.5 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#1E56A0]">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase text-[#555] mb-1">Description *</label>
+          <textarea id="edit-issue-desc" required rows="3"
+                    class="w-full px-3.5 py-2 bg-white border border-[#E7E5E0] rounded-xl text-sm text-[#202020] focus:outline-none focus:ring-2 focus:ring-[#1E56A0]"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-[#E7E5E0]">
+          <button type="button" id="edit-modal-cancel" class="px-4 py-2 text-sm font-medium text-[#555] hover:bg-[#F7F6F2] rounded-full">
+            Cancel
+          </button>
+          <button type="submit" class="px-5 py-2 text-sm font-medium text-white bg-[#1E56A0] hover:bg-[#174785] rounded-full shadow-sm">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div id="delete-confirm-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
+    <div class="bg-white rounded-2xl border border-[#FECACA] shadow-xl max-w-sm w-full p-6 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-[#E7E5E0]">
+        <h3 class="text-base font-semibold text-[#B91C1C]">Confirm Delete</h3>
+        <button id="delete-modal-close" class="text-[#888] hover:text-[#202020] p-1 rounded-md">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-full bg-[#FEE2E2] flex items-center justify-center shrink-0">
+          <svg class="w-5 h-5 text-[#B91C1C]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </div>
+        <div>
+          <p class="text-sm text-[#202020] font-medium">Are you sure you want to delete this issue?</p>
+          <p id="delete-modal-issue-title" class="text-xs text-[#737373] mt-1 font-mono"></p>
+          <p class="text-xs text-[#B91C1C] mt-2">This action cannot be undone in this session.</p>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-[#E7E5E0]">
+        <button id="delete-modal-cancel" class="px-4 py-2 text-sm font-medium text-[#555] hover:bg-[#F7F6F2] rounded-full">
+          Cancel
+        </button>
+        <button id="delete-modal-confirm" class="px-5 py-2 text-sm font-medium text-white bg-[#B91C1C] hover:bg-[#991B1B] rounded-full shadow-sm transition-all">
+          Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Footer Container -->
+  <div id="site-footer"></div>
+
+  <!-- Developer 4 Admin Script -->
+  <script type="module" src="../../js/dev4/admin.js"></script>
+</body>
+</html>

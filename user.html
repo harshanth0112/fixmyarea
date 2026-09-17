@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citizen Profile & Reports — FixMyArea</title>
+  <meta name="description" content="View your submitted reports, tracking history, and account settings.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#536B4F',
+              hover: '#435740',
+              soft: '#DDE6D8',
+            },
+            canvas: '#F7F6F2',
+            surface: '#FFFFFF',
+            borderLight: '#E7E5E0',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F7F6F2;
+      color: #202020;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans antialiased selection:bg-[#DDE6D8] selection:text-[#202020]">
+
+  <!-- Shared Header Target -->
+  <div id="site-header"></div>
+
+  <!-- Main Profile Content -->
+  <main class="flex-grow max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+    
+    <!-- Profile Card Header -->
+    <div class="bg-white border border-[#E7E5E0] rounded-3xl p-6 sm:p-8 shadow-sm mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <!-- User Avatar Logo -->
+        <div class="w-16 h-16 rounded-2xl bg-[#DDE6D8] text-[#536B4F] flex items-center justify-center font-bold text-2xl shrink-0">
+          <svg class="w-9 h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <h1 class="text-2xl font-bold text-[#202020]">Citizen Resident</h1>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EBF5EA] text-[#2D6A28] border border-[#C3E4BF]">
+              Verified Citizen
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-[#737373]">citizen@example.com &bull; Member of Sample Nagar Community</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center px-4 py-2 text-sm font-medium text-[#202020] bg-[#F7F6F2] border border-[#E7E5E0] hover:bg-[#EFECE6] rounded-full transition-all">
+          <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>
+          Home Page
+        </a>
+        <a href="report.html" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-[#536B4F] hover:bg-[#435740] rounded-full shadow-sm transition-all">
+          <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          New Report
+        </a>
+        <button id="user-logout-btn" class="px-4 py-2 text-sm font-medium text-[#737373] hover:text-[#202020] bg-[#F7F6F2] border border-[#E7E5E0] rounded-full transition-all">
+          Switch Role
+        </button>
+      </div>
+    </div>
+
+    <!-- User Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-5">
+        <div class="text-xs uppercase font-semibold text-[#888] mb-1">Submitted Reports</div>
+        <div class="text-2xl font-bold text-[#202020]">3</div>
+      </div>
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-5">
+        <div class="text-xs uppercase font-semibold text-[#888] mb-1">In Progress</div>
+        <div class="text-2xl font-bold text-[#1E56A0]">1</div>
+      </div>
+      <div class="bg-white border border-[#E7E5E0] rounded-2xl p-5">
+        <div class="text-xs uppercase font-semibold text-[#888] mb-1">Resolved</div>
+        <div class="text-2xl font-bold text-[#2D6A28]">1</div>
+      </div>
+    </div>
+
+    <!-- My Submitted Reports Section -->
+    <div class="mb-6">
+      <h2 class="text-xl font-bold text-[#202020] mb-2">My Recent Reports</h2>
+      <p class="text-xs text-[#737373]">Track status updates on problems you have brought to light</p>
+    </div>
+
+    <div id="user-reports-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Populated via JS -->
+    </div>
+
+  </main>
+
+  <!-- Shared Footer Target -->
+  <div id="site-footer"></div>
+
+  <script type="module">
+    import { initLayout, createIssueCard } from './js/layout.js';
+    import { issues } from './js/data.js';
+    import { logoutUser } from './js/auth.js';
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initLayout("user");
+
+      // Render 3 sample reports for the citizen
+      const grid = document.getElementById("user-reports-grid");
+      if (grid) {
+        grid.innerHTML = issues.slice(0, 3).map(i => createIssueCard(i)).join("");
+      }
+
+      document.getElementById("user-logout-btn").addEventListener("click", () => {
+        logoutUser();
+        window.location.href = "login.html";
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register — FixMyArea</title>
+  <meta name="description" content="Create your citizen account on FixMyArea to report and track local civic issues.">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            brand: { DEFAULT: '#536B4F', hover: '#435740', soft: '#DDE6D8' },
+            canvas: '#F7F6F2',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #F7F6F2; color: #202020; }
+
+    .input-field {
+      width: 100%;
+      padding: 0.6rem 0.9rem;
+      background: #fff;
+      border: 1px solid #E7E5E0;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      color: #202020;
+      outline: none;
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .input-field:focus {
+      border-color: #536B4F;
+      box-shadow: 0 0 0 3px rgba(83,107,79,0.12);
+    }
+    .input-label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #555;
+      margin-bottom: 0.3rem;
+    }
+    .section-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #536B4F;
+      background: #DDE6D8;
+      padding: 0.3rem 0.75rem;
+      border-radius: 0.5rem;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-sans antialiased">
+
+  <!-- Shared Header Target -->
+  <div id="site-header"></div>
+
+  <main class="flex-grow px-4 sm:px-6 lg:px-8 py-10">
+    <div class="max-w-2xl mx-auto">
+
+      <!-- Page Header -->
+      <div class="mb-8">
+        <a href="login.html" class="inline-flex items-center gap-1.5 text-xs text-[#536B4F] font-medium hover:underline mb-4">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          Back to Login
+        </a>
+        <div class="flex items-center gap-3 mt-2">
+          <div class="w-10 h-10 rounded-xl bg-[#EBF5EA] text-[#2D6A28] flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold text-[#202020] tracking-tight">Create Citizen Account</h1>
+            <p class="text-xs text-[#737373] mt-0.5">Fill in your details to register and access FixMyArea</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Registration Form Card -->
+      <form id="register-form" class="bg-white border border-[#E7E5E0] rounded-2xl shadow-sm p-7 space-y-7">
+
+        <!-- ── Section 1: Personal Information ── -->
+        <div>
+          <div class="section-title">Personal Information</div>
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="input-label" for="u-first-name">First Name <span class="text-[#B91C1C]">*</span></label>
+                <input type="text" id="u-first-name" class="input-field" placeholder="Ravi" required>
+              </div>
+              <div>
+                <label class="input-label" for="u-last-name">Last Name <span class="text-[#B91C1C]">*</span></label>
+                <input type="text" id="u-last-name" class="input-field" placeholder="Kumar" required>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="input-label" for="u-email">Email Address <span class="text-[#B91C1C]">*</span></label>
+                <input type="email" id="u-email" class="input-field" placeholder="ravi@example.com" required>
+              </div>
+              <div>
+                <label class="input-label" for="u-phone">Phone Number <span class="text-[#B91C1C]">*</span></label>
+                <input type="tel" id="u-phone" class="input-field" placeholder="+91 9876543210" maxlength="13" required>
+              </div>
+            </div>
+
+            <div>
+              <label class="input-label" for="u-dob">Date of Birth</label>
+              <input type="date" id="u-dob" class="input-field max-w-xs">
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Section 2: Account Security ── -->
+        <div>
+          <div class="section-title">Account Security</div>
+          <div class="space-y-4">
+            <div>
+              <label class="input-label" for="u-username">Username <span class="text-[#B91C1C]">*</span></label>
+              <input type="text" id="u-username" class="input-field" placeholder="ravi_kumar" autocomplete="username" required>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="input-label" for="u-password">Password <span class="text-[#B91C1C]">*</span></label>
+                <div class="relative">
+                  <input type="password" id="u-password" class="input-field pr-10" placeholder="Min. 6 characters" minlength="6" required>
+                  <button type="button" id="toggle-pwd" tabindex="-1"
+                          class="absolute right-3 top-1/2 -translate-y-1/2 text-[#888] hover:text-[#202020]">
+                    <svg id="eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div>
+                <label class="input-label" for="u-confirm-password">Confirm Password <span class="text-[#B91C1C]">*</span></label>
+                <input type="password" id="u-confirm-password" class="input-field" placeholder="Repeat password" required>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Section 3: Address & Location ── -->
+        <div>
+          <div class="section-title">Address &amp; Location</div>
+          <div class="space-y-4">
+            <div>
+              <label class="input-label" for="u-address">Street Address <span class="text-[#B91C1C]">*</span></label>
+              <input type="text" id="u-address" class="input-field" placeholder="123, MG Road, Near Clock Tower" required>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="input-label" for="u-city">City / Town <span class="text-[#B91C1C]">*</span></label>
+                <input type="text" id="u-city" class="input-field" placeholder="Bangalore" required>
+              </div>
+              <div>
+                <label class="input-label" for="u-state">State</label>
+                <input type="text" id="u-state" class="input-field" placeholder="Karnataka">
+              </div>
+              <div>
+                <label class="input-label" for="u-pincode">Pincode <span class="text-[#B91C1C]">*</span></label>
+                <input type="text" id="u-pincode" class="input-field" placeholder="560001" maxlength="6" pattern="\d{6}" required>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="input-label" for="u-ward">Ward / Locality</label>
+                <input type="text" id="u-ward" class="input-field" placeholder="Ward No. 42">
+              </div>
+              <div>
+                <label class="input-label" for="u-landmark">Landmark</label>
+                <input type="text" id="u-landmark" class="input-field" placeholder="Near City Bus Stand">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Section 4: Identity Verification ── -->
+        <div>
+          <div class="section-title">Identity Verification</div>
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="input-label" for="u-id-type">ID Type</label>
+                <select id="u-id-type" class="input-field">
+                  <option value="">— Select ID —</option>
+                  <option value="aadhaar">Aadhaar Card</option>
+                  <option value="voter">Voter ID</option>
+                  <option value="pan">PAN Card</option>
+                  <option value="passport">Passport</option>
+                  <option value="driving">Driving Licence</option>
+                </select>
+              </div>
+              <div>
+                <label class="input-label" for="u-id-number">ID Number</label>
+                <input type="text" id="u-id-number" class="input-field" placeholder="XXXX-XXXX-XXXX">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Banner -->
+        <p id="form-error" class="hidden text-sm text-[#B91C1C] bg-[#FEE2E2] border border-[#FECACA] px-4 py-3 rounded-xl"></p>
+
+        <!-- Submit Actions -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-[#E7E5E0]">
+          <p class="text-xs text-[#888]"><span class="text-[#B91C1C]">*</span> Required fields</p>
+          <div class="flex gap-3 w-full sm:w-auto">
+            <a href="login.html"
+               class="flex-1 sm:flex-none text-center px-5 py-2.5 text-sm font-medium text-[#555] border border-[#E7E5E0] hover:bg-[#F7F6F2] rounded-xl transition-all">
+              Cancel
+            </a>
+            <button type="submit"
+                    class="flex-1 sm:flex-none px-6 py-2.5 text-sm font-semibold text-white bg-[#536B4F] hover:bg-[#435740] rounded-xl shadow-sm transition-all">
+              Create Account &amp; Sign In
+            </button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </main>
+
+  <!-- Shared Footer -->
+  <div id="site-footer"></div>
+
+  <script type="module">
+    import { initLayout } from './js/layout.js';
+    import { setCurrentUser } from './js/auth.js';
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initLayout("register");
+
+      // Password show/hide
+      const pwdInput  = document.getElementById("u-password");
+      const toggleBtn = document.getElementById("toggle-pwd");
+      const eyeIcon   = document.getElementById("eye-icon");
+
+      toggleBtn.addEventListener("click", () => {
+        const isText = pwdInput.type === "text";
+        pwdInput.type = isText ? "password" : "text";
+        eyeIcon.innerHTML = isText
+          ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>`
+          : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>`;
+      });
+
+      // Form submit
+      const form      = document.getElementById("register-form");
+      const formError = document.getElementById("form-error");
+
+      function showError(msg) {
+        formError.textContent = msg;
+        formError.classList.remove("hidden");
+        formError.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        formError.classList.add("hidden");
+
+        const firstName = document.getElementById("u-first-name").value.trim();
+        const lastName  = document.getElementById("u-last-name").value.trim();
+        const email     = document.getElementById("u-email").value.trim();
+        const phone     = document.getElementById("u-phone").value.trim();
+        const username  = document.getElementById("u-username").value.trim();
+        const password  = document.getElementById("u-password").value;
+        const confirm   = document.getElementById("u-confirm-password").value;
+        const address   = document.getElementById("u-address").value.trim();
+        const city      = document.getElementById("u-city").value.trim();
+        const pincode   = document.getElementById("u-pincode").value.trim();
+
+        if (!firstName || !lastName || !email || !phone || !username || !password || !confirm || !address || !city || !pincode) {
+          showError("Please fill in all required (*) fields before submitting.");
+          return;
+        }
+        if (password.length < 6) {
+          showError("Password must be at least 6 characters long.");
+          return;
+        }
+        if (password !== confirm) {
+          showError("Passwords do not match. Please re-enter.");
+          return;
+        }
+        if (!/^\d{6}$/.test(pincode)) {
+          showError("Pincode must be exactly 6 digits.");
+          return;
+        }
+
+        // Save full profile and log in
+        setCurrentUser({
+          role:     "user",
+          name:     `${firstName} ${lastName}`,
+          username,
+          email,
+          phone,
+          dob:      document.getElementById("u-dob").value,
+          address,
+          city,
+          state:    document.getElementById("u-state").value.trim(),
+          pincode,
+          ward:     document.getElementById("u-ward").value.trim(),
+          landmark: document.getElementById("u-landmark").value.trim(),
+          idType:   document.getElementById("u-id-type").value,
+          idNumber: document.getElementById("u-id-number").value.trim(),
+        });
+
+        // Redirect to user profile page first, then the user can open the home page
+        window.location.href = "user.html";
+      });
+    });
+  </script>
+</body>
+</html>
